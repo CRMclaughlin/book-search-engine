@@ -4,12 +4,15 @@ const db = require('./config/connection');
 const routes = require('./routes');
 const { ApolloServer } = require('@apollo/server')
 const { expressMiddleware } = require('@apollo/server/express4')
+const { authMiddleware } = require('./utils/auth')
 const typeDefs = require('./schemas/typeDefs')
 const resolvers = require('./schemas/resolvers')
+
 
 const apolloServer = new ApolloServer({
   typeDefs,
   resolvers,
+  context: authMiddleware,
 })
 
 const app = express();
