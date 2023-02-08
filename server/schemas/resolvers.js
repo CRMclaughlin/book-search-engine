@@ -1,51 +1,65 @@
+const { AuthenticationError } = require('apollo-server-express')
 const { User } = require('../models')
 const { signToken } = require('../utils/auth')
 
 const resolvers = {
     Query: {
-     me: async (parent, {_id, username}, context, info) => {
-        if (username) {
-            return await User.findOne({ username })
+     me: async (parent, args, context, info) => {
+        if (context.user) {
+            const userProile = await User.findOne({ _id: context.user.id }).select('-__v -password')
+
+            return userProile
         }
-        return await User.findById(_id)
+        
+        throw new AuthenticationError('You are not logged in, please try again!')
      }
     },
+
     Mutation: {
         login: async (parent, { email, password }, context, info) => {
             const user = await User.findOne({ email })
-            const usersPw = await user.isCorrectPassword(password)
-            let token
-
-            if (usersPw) {
-                token = signToken(user)
-            } else {
-                return
+            const correctPw = user.isCorrectPassword(password)
+            
+            if (!correctPw) {
+                throw new AuthenticationError('Password Incorrect')
             }
 
-            const auth = {token, user }
-            return auth
+            const token = signToken(user)
+
+            return { token, user }
         },
 
         addUser: async (parent, args, context, info) => {
-            return await User.create(args)
-        },
+            const user = await User.create(args)
+            const token = signToken(user)
 
-        saveBook: async (parent, {_id, input}, context, info) => {
-            return await User.findOneAndUpdate(
-                { _id },
-                { $addToSet: { savedBooks: input }},
-                { new: true }
-            )
+            return { token, user }
         },
-
-        removeBook: async (parent, { _id, bookId }, context, info) => {
-            return await User.findOneAndUpdate(
-                { _id },
-                { $pull: {savedBooks: bookId }},
-                { new: true} 
-            )
+        saveBook: async (parent, { bookData }, context, info) => {
+            if (context.user) {
+                const savedBook = await User.findByIdAndUpdate(
+                    { _id: context.user._id},
+                    { $push: { savedBooks: bookData } },
+                    { new: true }
+                )
+                return savedBook
+            }
+        },
+        removeBook: async (parent, { bookId }, context, info) => {
+            if (context.user) {
+                const removeBook = await User.findOneAndUpdate(
+                    { _id: context.user._id },
+                    { $pull: { savedBooks: { bookId }}},
+                    { new: true }
+                )
+                return removeBook
+            }
         }
+
+
     }
+   
+    
 }
 
 module.exports = resolvers
