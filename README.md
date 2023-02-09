@@ -24,9 +24,6 @@
   * Google Books API
   * React.js
   
-  
-  
-  
   <h3> Steps to initialize this project locally on your machine <h3>
     
     1. Copy link from [Github](https://github.com/CRMclaughlin/book-search-engine.git) repo and clone to your coding workspace
