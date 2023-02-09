@@ -11,7 +11,7 @@
   * [Questions](#questions)
 
   ## Description
-
+  This is a MERN app that allows users to search for books using the Google Books API. Users can sign up or login, and once logged in they can save or delete books to or from their profile.
   
   ## Installation
   <h3> To use this project you will need these programs installed on your machine:<h3>
@@ -19,16 +19,18 @@
   * VS Code
   * Node.js
   * Express
-  * MongoDB
-  * Mongoose ODM
+  * Mongoose 
   * GrahphQL
+  * Google Books API
+  * React.js
+  
   
   
   
   <h3> Steps to initialize this project locally on your machine <h3>
     
-    1. Copy link from [Github]() repo and clone to your coding workspace
-    2. In your terminal use the command `npm init -y` to install Node Package Manager
+    1. Copy link from [Github](https://github.com/CRMclaughlin/book-search-engine.git) repo and clone to your coding workspace
+    2. In your terminal use the command `npm init` to install Node Package Manager
   
 
   
