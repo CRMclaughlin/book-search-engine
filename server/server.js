@@ -13,7 +13,7 @@ const resolvers = require('./schemas/resolvers');
 const server = new ApolloServer({
   typeDefs,
   resolvers,
-  context: authMiddleware,
+  // context: authMiddleware,
 })
 
 
@@ -34,7 +34,9 @@ if (process.env.NODE_ENV === 'production') {
 db.once('open', async () => {
   await server.start()
 
-  app.use(expressMiddleware(server))
+  app.use(expressMiddleware(server, {
+    context: authMiddleware
+  }))
   console.log( `Apollo Graphql Playground at http://localhost:${PORT}/graphql`)
   
   app.listen(PORT, () => console.log(`🌍 Now listening on localhost:${PORT}`));

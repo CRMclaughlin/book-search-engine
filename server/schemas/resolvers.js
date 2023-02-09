@@ -1,4 +1,4 @@
-const { AuthenticationError } = require('apollo-server-express')
+const { GraphQLError } = require('graphql')
 const { User } = require('../models')
 const { signToken } = require('../utils/auth')
 
@@ -11,7 +11,15 @@ const resolvers = {
             return userProile
         }
         
-        throw new AuthenticationError('You are not logged in, please try again!')
+        throw new GraphQLError('You are not logged in, please try again!', {
+            extensions: {
+                code: 'UNAUTHENTICATED',
+                http: { status: 401 }
+
+            }
+        }) 
+
+        
      }
     },
 
@@ -21,7 +29,13 @@ const resolvers = {
             const correctPw = user.isCorrectPassword(password)
             
             if (!correctPw) {
-                throw new AuthenticationError('Password Incorrect')
+                throw new GraphQLError('Password Incorrect, please try again!', {
+                    extensions: {
+                        code: 'UNAUTHENTICATED',
+                        http: { status: 400 }
+        
+                    }
+                }) 
             }
 
             const token = signToken(user)
