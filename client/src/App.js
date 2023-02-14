@@ -5,7 +5,7 @@ import SearchBooks from './pages/SearchBooks';
 import SavedBooks from './pages/SavedBooks';
 import Navbar from './components/Navbar';
 
-import Auth from './utils/auth';
+import AuthService from './utils/auth';
 import { setContext } from '@apollo/client/link/context'
 
 const httpLink = createHttpLink({
@@ -13,7 +13,7 @@ const httpLink = createHttpLink({
 })
 
 const authLink = setContext((_, { headers }) => {
-  const token = Auth.getToken()
+  const token = AuthService.getToken()
   return {
     headers: {
       ...headers,

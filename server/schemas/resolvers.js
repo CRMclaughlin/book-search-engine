@@ -6,7 +6,7 @@ const resolvers = {
     Query: {
      me: async (parent, args, context, info) => {
         if (context.user) {
-            const userProile = await User.findOne({ _id: context.user.id }).select('-__v -password')
+            const userProile = await User.findOne({ _id: context.user._id }).select('-__v -password')
 
             return userProile
         }
