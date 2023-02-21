@@ -33,7 +33,7 @@
   
 ## Usage 
   
-
+Checkout the deployed [Heroku App](https://stark-chamber-35705.herokuapp.com/)
   
 ## Demo
 
