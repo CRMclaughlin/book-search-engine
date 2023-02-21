@@ -39,6 +39,8 @@ Checkout the deployed [Heroku App](https://stark-chamber-35705.herokuapp.com/)
 
 <img width="1507" alt="Screenshot 2023-02-08 at 6 58 48 PM" src="https://user-images.githubusercontent.com/111208223/217689119-4dd1120f-38dc-4e64-8f7a-b83497a86978.png">
 
+<img width="1501" alt="Screenshot 2023-02-20 at 9 00 13 PM" src="https://user-images.githubusercontent.com/111208223/220237726-4f739685-7d9b-4885-9b42-95c9883b42bb.png">
+
 
 ## License
 N/A
